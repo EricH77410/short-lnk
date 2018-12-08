@@ -1,8 +1,30 @@
 import { Meteor } from 'meteor/meteor';
+import { WebApp } from 'meteor/webapp'
+
 import '../imports/api/users'
-import '../imports/api/links'
+import { Links } from '../imports/api/links'
 
 Meteor.startup(() => {
+
+  // Set http status to 302
+  // Set 'Location' header to 'http://www.google.fr'
+  // Call res.end()
+
+  WebApp.connectHandlers.use((req, res, next) => {
+    const _id = req.url.slice(1)
+    const link = Links.findOne({ _id })
+
+    if (link) {
+      res.statusCode = 302
+      res.setHeader('Location', link.url)
+      res.end()
+      Meteor.call('links.trackVisit', _id)
+    } else {
+      next()
+    }
+
+  })
+
   // code to run on server at startup
 
   // const petSchema = new SimpleSchema({

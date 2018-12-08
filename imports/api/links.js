@@ -1,10 +1,10 @@
 import { Mongo } from 'meteor/mongo'
 import { Meteor } from 'meteor/meteor'
 import SimpleSchema from 'simpl-schema'
+import shortid from 'shortid'
 import '../startup/simple-schema-conf.js'
 
 export const Links = new Mongo.Collection('links')
-
 
 if (Meteor.isServer){
   // Il n'est pas possible de récupérer le resultat de la fonction Meteor.userId
@@ -31,12 +31,49 @@ Meteor.methods({
           regEx: SimpleSchema.RegEx.Url
         }
       }).validate({url})
-      throw new Meteor.Error('400', e.message)
 
     Links.insert({
+      _id: shortid.generate(),
       url,
-      userId: this.userId
+      userId: this.userId,
+      visible: true,
+      visitedCount: 0,
+      lastVisitedAt: null
     })
 
+  },
+  'links.setVisibility'(id, visible){
+    if (!this.userId){
+      throw new Meteor.Error('Non authorisé!')
+    }
+
+    new SimpleSchema({
+      id: {
+        type: String,
+        min: 1
+      },
+      visible: {
+        type: Boolean
+      }
+    }).validate({id, visible});
+
+    Links.update({_id:id, userId: this.userId}, { $set: {visible}})
+  },
+  'links.trackVisit'(_id){
+    new SimpleSchema({
+      _id: {
+        type: String,
+        min: 1
+      }
+    }).validate({_id});
+
+    Links.update({_id}, {
+      $set: {
+        lastVisitedAt: new Date().getTime()
+      },
+      $inc: {
+        visitedCount: 1
+      }
+    })
   }
 })

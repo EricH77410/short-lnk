@@ -1,9 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router'
 
-class NotFound extends React.Component {
-  render() {
-    return (<h3>Nothing here</h3>)
-  }
+export default () => {
+  return (
+    <div className="boxed-view">
+      <div className="boxed-view__box">
+        <h1>Page Not Found</h1>
+        <p>Hummm, we're unable to find that page.</p>
+        <Link to="/" className="button button--link">Head Home</Link>
+      </div>
+    </div>
+  )
 }
-
-export default NotFound
