@@ -11,6 +11,10 @@ export default class AddLink extends React.Component {
     error: ''
   }
 
+  componentWillMount() {
+    Modal.setAppElement('body') // Pour éviter un message d'erreur dans la console
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
     const url = this.state.url
@@ -40,6 +44,7 @@ export default class AddLink extends React.Component {
     return (
       <div>
         <button className="button" onClick={() => this.setState({isOpen: true})}>+ Add Link</button>
+
           <Modal
             isOpen={this.state.isOpen}
             contentLabel="Add link"
@@ -58,7 +63,7 @@ export default class AddLink extends React.Component {
                 value={this.state.url}
                 onChange={this.onChange}
               />
-              <button className="button">Add Link</button>
+            <button className="button">Add Link</button>
               <button type="button" className="button button--secondary" onClick={this.handleModalclose}>Cancel</button>
             </form>
 

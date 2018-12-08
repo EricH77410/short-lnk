@@ -29,6 +29,11 @@
   margin: 0 ($space / 2) 0 0;
 }
 
+.button--del {
+  background: red;
+  color: white;
+}
+
 .button--secondary {
   color: $button-secondary-color;
   border: 1px solid $button-secondary-border;

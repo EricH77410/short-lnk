@@ -2,6 +2,7 @@
   background: $item-bg;
   border: 1px solid $item-border;
   border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0,0,0, .3);
   margin-bottom: $space;
   padding: $space;
 }

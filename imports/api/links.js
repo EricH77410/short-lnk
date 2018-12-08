@@ -75,5 +75,27 @@ Meteor.methods({
         visitedCount: 1
       }
     })
+  },
+  'links.updateLink'(_id, url){
+    new SimpleSchema({
+      _id: {
+        type: String,
+        min: 1
+      },
+      url: {
+        type: String,
+        label: 'Your link',
+        regEx: SimpleSchema.RegEx.Url
+      }
+    }).validate({_id, url})
+
+    Links.update({_id}, {$set: {url}})
+  },
+  'links.delete'(_id) {
+    if (!this.userId){
+      throw new Meteor.Error('Non authorisé!');
+    }
+
+    Links.remove(_id)
   }
 })
