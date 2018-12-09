@@ -30,7 +30,7 @@
 }
 
 .button--del {
-  background: red;
+  background: lighten($brand-primary, 20%);
   color: white;
 }
 
