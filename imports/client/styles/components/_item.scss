@@ -7,6 +7,10 @@
   padding: $space;
 }
 
+.item input {
+  width: 95%;
+}
+
 .item__message {
   color: $item-text-color;
 }

@@ -27,11 +27,23 @@
   border: 1px solid $button-pill-color;
   padding: .3rem .8rem;
   margin: 0 ($space / 2) 0 0;
+  transition: all .3s;
+
+  &:hover {
+    background: lighten($brand-primary, 20%);
+    color: white;
+  }
 }
 
 .button--del {
   background: lighten($brand-primary, 20%);
   color: white;
+  transition: all .3s;
+
+  &:hover {
+    background: transparent;
+    color: red;
+  }
 }
 
 .button--secondary {
